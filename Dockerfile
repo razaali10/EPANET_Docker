@@ -11,22 +11,23 @@ RUN git clone https://github.com/OpenWaterAnalytics/EPANET.git && \
     cd build && \
     cmake .. && \
     make && \
+    ls -l bin && \
     cp bin/runepanet /usr/local/bin/epanet2
 
 # Set working directory
 WORKDIR /app
 
-# Copy and install Python requirements
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy FastAPI application
+# Copy FastAPI app
 COPY app.py .
 
-# Expose API port
+# Expose port
 EXPOSE 5000
 
-# Run FastAPI app using Uvicorn
+# Run the app
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
 
 
