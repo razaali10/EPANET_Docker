@@ -44,8 +44,8 @@ async def simulate(inp_file: UploadFile = File(...)):
     except Exception as e:
         print(f"[ERROR] Unexpected error: {e}")
         return JSONResponse(status_code=500, content={"error": str(e)})
-        
 
+       
           
        
 
