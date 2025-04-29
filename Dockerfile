@@ -1,12 +1,17 @@
 FROM python:3.10-slim
 
-RUN apt-get update && apt-get install -y wget curl unzip
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    wget curl unzip build-essential cmake git
 
-# Install EPANET2 CLI
-RUN wget https://github.com/OpenWaterAnalytics/epanet/releases/download/v2.2/epanet2_2.2_linux.zip -O epanet.zip && \
-    unzip epanet.zip && \
-    chmod +x bin/epanet2 && \
-    mv bin/epanet2 /usr/local/bin/epanet2
+# Clone EPANET repository and build EPANET CLI
+RUN git clone https://github.com/OpenWaterAnalytics/EPANET.git && \
+    cd EPANET && \
+    mkdir build && \
+    cd build && \
+    cmake .. && \
+    make && \
+    cp bin/epanet2 /usr/local/bin/epanet2
 
 WORKDIR /app
 
