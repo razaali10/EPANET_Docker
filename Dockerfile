@@ -11,8 +11,7 @@ RUN git clone https://github.com/OpenWaterAnalytics/EPANET.git && \
     cd build && \
     cmake .. && \
     make && \
-    ls -l bin && \
-    cp bin/runepanet /usr/local/bin/epanet2
+    find . -name "runepanet" -exec cp {} /usr/local/bin/epanet2 \;
 
 # Set working directory
 WORKDIR /app
@@ -29,6 +28,5 @@ EXPOSE 5000
 
 # Run the app
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]
-
 
 
